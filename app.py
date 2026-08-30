@@ -2,12 +2,16 @@ import streamlit as st
 import pandas as pd
 import io
 
-# Impor modul secara aman agar aplikasi tidak crash
+# Impor gsheets dengan penanganan ganda (fallback)
 try:
-    from st_gsheets_connection import GSheetsConnection
+    from streamlit_gsheets import GSheetsConnection
     GSHEETS_OK = True
 except ImportError:
-    GSHEETS_OK = False
+    try:
+        from st_gsheets_connection import GSheetsConnection
+        GSHEETS_OK = True
+    except ImportError:
+        GSHEETS_OK = False
 
 try:
     import google.generativeai as genai
